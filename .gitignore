@@ -1,0 +1,57 @@
+# プロジェクト固有ファイル
+projects/*/meta/private_*.md
+projects/*/research/*_sensitive.md
+
+# 設定ファイル
+config/settings.yaml
+config/affiliate_keys.yaml
+
+# 一時ファイル
+*.tmp
+temp/
+.temp/
+
+# システムファイル
+.DS_Store
+Thumbs.db
+
+# エディタ設定
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# ログファイル
+*.log
+logs/
+
+# バックアップ
+backup/
+*.backup
+*.bak
+
+# 作業中ファイル
+draft_*
+work_in_progress_*
+.draft/
+
+# OS固有
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node.js関連（将来の拡張用）
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 秘密情報
+*.key
+*.secret
+api_keys.txt
+credentials.json
+
+# 完成記事（公開前）
+articles/ready_to_publish/
+articles/published/

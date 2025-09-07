@@ -1,0 +1,12 @@
+{
+  "id": "approval_1757136485745_bhigytmeo",
+  "title": "要件定義書の承認 - AIを活用したAmazonランキング記事作成システム",
+  "filePath": ".spec-workflow/specs/ai-amazon-article-generator/requirements.md",
+  "type": "document",
+  "status": "rejected",
+  "createdAt": "2025-09-06T05:28:05.745Z",
+  "category": "spec",
+  "categoryName": "ai-amazon-article-generator",
+  "response": "Rejected",
+  "respondedAt": "2025-09-06T05:34:06.986Z"
+}
