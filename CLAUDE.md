@@ -132,6 +132,24 @@ The system is designed to work with Gemini MCP for research automation but inclu
 - **Revenue Target**: ¥50,000 monthly affiliate revenue
 - **Processing Time**: Complete article creation in 3-4 hours per article
 
+## Article Creation Rules - 正確性の絶対原則
+
+### 記事作成時の厳格なルール
+1. **調査レポートに記載された情報のみを使用する**
+   - 調査レポート外の情報は絶対に含めない
+   - 一般的な知識での補完は禁止
+   - 不足がある場合は記事を縮小するか、追加調査を明示的に要求
+
+2. **すべての情報に根拠が必要**
+   - 商品情報：ASINコードまたは明確な出典
+   - エピソード：具体的な引用元
+   - 価格：調査時点の情報であることを明記
+
+3. **不確実な情報の扱い**
+   - 確認できない情報は含めない
+   - 推測や憶測は一切禁止
+   - 「わからない」ことは明確に伝える
+
 ## Important Notes for Claude Code
 
 1. **Always validate configuration** before running tools - check that required API credentials are properly set
@@ -141,3 +159,4 @@ The system is designed to work with Gemini MCP for research automation but inclu
 5. **Integration with Gemini MCP** - When available, use MCP for research automation; otherwise provide manual execution guidance
 6. **Quality gates are mandatory** - never skip the quality check phase
 7. **Maintain affiliate compliance** - ensure proper affiliate disclosures and Amazon ToS compliance
+8. **Accuracy is paramount** - Never sacrifice accuracy for completeness. If information is uncertain, exclude it rather than guess

@@ -9,8 +9,13 @@
 - **プロジェクト名**: [project-name]
 - **ペルソナファイル**: [persona-file-reference]
 - **リサーチ実行日**: [YYYY-MM-DD]
-- **リサーチ方法**: [Gemini MCP / 手動実行]
+- **リサーチ方法**: [Perplexity / Gemini MCP / 手動実行]
 - **担当者**: [researcher-name]
+
+### Perplexity実行記録
+- **実行時間**: [開始時刻 - 終了時刻]
+- **使用プロンプト数**: [number]
+- **追加質問回数**: [number]
 
 ---
 
@@ -188,10 +193,15 @@
 
 ## 補足情報
 
-### 参考資料
+### 参考資料・出典URL
 - [reference-1]
 - [reference-2]
 - [reference-3]
+
+### Perplexity参照URL
+- [perplexity-source-1]
+- [perplexity-source-2]
+- [perplexity-source-3]
 
 ### 課題・改善点
 - [issue-1]

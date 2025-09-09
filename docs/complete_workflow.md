@@ -176,48 +176,56 @@ claude-code "
 
 ---
 
-## 🔬 Phase 3: DeepResearch実行
+## 🔬 Phase 3: Perplexity DeepResearch実行
 
 ### 目的
-プロンプトを使用して包括的なリサーチを実行し、記事の根拠となるデータを収集する。
+Perplexityを使用して包括的なリサーチを実行し、記事の根拠となるデータを収集する。
 
 ### 使用ファイル
 - **プロンプト**: `projects/$PROJECT_ID/prompts/research-prompts.md`
-- **テンプレート**: `templates/research/data_template.md`
-- **ガイド**: `guides/research_guide.md`
+- **Perplexityテンプレート**: `templates/prompts/perplexity_research.md`
+- **リサーチテンプレート**: `templates/research/research_template.md`
+- **ガイド**: `guides/perplexity_research_guide.md`
 
 ### 実行手順
 
-#### Step 3.1: Gemini MCPでのリサーチ実行（利用可能な場合）
+#### Step 3.1: Perplexityでのリサーチ実行
 
 ```bash
+# プロンプト準備
 claude-code "
-@projects/$PROJECT_ID/prompts/research-prompts.md の
-各プロンプトをGemini MCPで実行してください。
+@projects/$PROJECT_ID/prompts/research-prompts.md と
+@templates/prompts/perplexity_research.md を参照して、
+Perplexity用の最適化されたプロンプトを表示してください。
 
 実行順序：
-1. キーワードリサーチ
-2. 競合分析
-3. 製品調査
+1. キーワード・市場調査
+2. 競合分析  
+3. 製品詳細調査（TOP10-15）
 4. トレンド分析
-
-結果保存先: projects/$PROJECT_ID/research/
 "
 ```
 
-#### Step 3.2: 手動リサーチ実行（Gemini MCP利用不可の場合）
+**Perplexity実行プロセス**:
+1. [Perplexity.ai](https://www.perplexity.ai/)にアクセス
+2. 生成された各プロンプトを順次実行
+3. 回答を確認し、必要に応じて追加質問で深掘り
+4. 各結果をMarkdown形式でコピー
+
+#### Step 3.2: リサーチ結果の整理と保存
 
 ```bash
-# プロンプト表示
+# 結果整理
 claude-code "
-@projects/$PROJECT_ID/prompts/research-prompts.md を表示し、
-手動実行用の指示を出してください。
-"
+Perplexityから取得した結果を
+@templates/research/research_template.md のフォーマットに整理してください。
 
-# 結果入力
-claude-code "
-@templates/research/data_template.md のフォーマットで
-リサーチ結果を入力してください。
+整理項目：
+- 製品情報（ASIN、価格、スペック）
+- レビュー要約
+- 競合分析データ
+- トレンド情報
+
 保存先: projects/$PROJECT_ID/research/research-data.md
 "
 ```

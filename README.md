@@ -18,98 +18,254 @@ Amazon Product Advertising API 5.0と高度なサクラレビュー検出機能�
 - **自動化**: Playwright使用のサクラチェッカー連携
 - **品質保証**: TDD実装による高信頼性システム
 
+## 🚀 クイックスタート
+
+```bash
+# 1. リポジトリのクローン
+git clone <repository-url>
+cd amazon-note-rank
+
+# 2. 依存関係のインストール (UV使用)
+uv sync
+
+# 3. 環境設定 (推奨方法)
+export AWS_ACCESS_KEY_ID="your-pa-api-access-key"
+export AWS_SECRET_ACCESS_KEY="your-pa-api-secret-key"
+
+# 4. 設定ファイル編集
+cp config/settings.yaml.example config/settings.yaml
+# アフィリエイトIDを設定
+
+# 5. テスト実行
+uv run pytest tests/ -v
+
+# 6. サンプル記事の作成
+uv run python3 tools/affiliate_link_generator_integrated.py --project-id "gaming-monitor-fighter-2025-01-07"
+```
+
 ## プロジェクト構造
 
 ```
 amazon-note-rank/
-├── projects/                 # プロジェクト管理
-│   └── {project-id}/        # 個別プロジェクト
-│       ├── persona/         # ペルソナデータ
-│       ├── prompts/         # DeepResearchプロンプト
-│       ├── research/        # リサーチ結果
-│       ├── articles/        # 生成記事
-│       └── meta/           # プロジェクトメタデータ
-├── templates/               # 各種テンプレート
-│   ├── persona/            # ペルソナテンプレート
-│   ├── prompts/            # プロンプトテンプレート
-│   ├── research/           # リサーチテンプレート
-│   ├── article/            # 記事テンプレート
-│   ├── project/            # プロジェクト管理テンプレート
-│   └── analytics/          # 分析テンプレート
-├── prompts/                # Claude Code用プロンプト
-├── checklists/             # 品質チェックリスト
-├── guides/                 # 操作ガイド
-├── workflows/              # ワークフロー定義
-├── tools/                  # 効率化ツール
-├── docs/                   # ドキュメント
-└── config/                 # 設定ファイル
+├── 📁 projects/                     # プロジェクト管理
+│   └── {project-id}/               # 個別プロジェクト
+│       ├── persona/                # ペルソナデータ
+│       ├── prompts/                # DeepResearchプロンプト
+│       ├── research/               # リサーチ結果
+│       ├── articles/               # 生成記事
+│       └── meta/                   # プロジェクトメタデータ (project.yaml)
+│
+├── 🛠️ tools/                       # コアツール群
+│   ├── affiliate_link_generator_integrated.py  # アフィリエイトリンク統合生成
+│   ├── pa_api_client.py            # Amazon PA-API 5.0 クライアント
+│   ├── sakura_detector.py          # サクラレビュー検出システム
+│   ├── playwright_automation.py    # ブラウザ自動化
+│   └── note_article_converter.py   # note記事変換ツール
+│
+├── 📝 templates/                    # 各種テンプレート
+│   ├── persona/                    # ペルソナテンプレート
+│   ├── prompts/                    # プロンプトテンプレート
+│   ├── research/                   # リサーチテンプレート
+│   ├── article/                    # 記事テンプレート
+│   ├── project/                    # プロジェクト管理テンプレート
+│   ├── analytics/                  # 分析テンプレート
+│   └── character/                  # AIキャラクター設定
+│
+├── 📚 docs/                        # ドキュメント
+│   ├── complete_workflow.md        # 完全ワークフローガイド
+│   ├── PA-API.md                   # PA-API仕様書
+│   ├── tdd_implementation_pa_api.md # TDD実装ガイド
+│   └── troubleshooting.md          # トラブルシューティング
+│
+├── ✅ tests/                       # テストスイート
+│   └── test_pa_api_client.py       # PA-APIクライアントテスト
+│
+├── ⚙️ config/                      # 設定管理
+│   └── settings.yaml               # メイン設定ファイル
+│
+├── 📋 checklists/                  # 品質チェックリスト
+├── 🔧 workflows/                   # ワークフロー定義
+├── 📖 guides/                      # 操作ガイド
+└── 🚀 scripts/                     # 自動化スクリプト
 ```
 
-## ワークフロー概要
+### 💾 実際のプロジェクト例
 
-1. **ペルソナ作成**: Claude Codeでターゲット読者のペルソナを作成
-2. **プロンプト生成**: ペルソナを基にDeepResearchプロンプトを生成  
-3. **リサーチ実行**: Gemini MCP/手動でDeepResearchを実行
-4. **記事生成**: リサーチデータを参照してClaude Codeで記事生成
-5. **品質チェック**: Claude Codeで品質確認と最適化
+現在のシステムで管理されているプロジェクト：
 
-## セットアップ
+```
+projects/
+├── gaming-monitor-fighter-2025-01-07/    # 格闘ゲーム用モニターランキング
+│   ├── articles/final-integrated-with-affiliate.md
+│   ├── research/gemini.md, perplexity.md, chatgpt.md
+│   └── persona/persona-001.md
+│
+└── gaming-keyboard-2025-09-07/           # ゲーミングキーボード比較
+    ├── articles/final-note-article.md
+    ├── research/キーボード製品比較レポート作成_.md
+    └── persona/persona-001.md
+```
 
-1. プロジェクトをクローン
-2. 設定ファイルを編集（config/settings.yaml）
-3. テンプレートを確認・カスタマイズ
-4. ワークフローガイドに従って記事作成開始
+## 🔄 5フェーズワークフロー
 
-## 使用方法
+### Phase 1: ペルソナ作成 (30-45分)
+```bash
+# templates/persona/default_persona.md を基に実行
+# Claude Codeでターゲット読者の詳細ペルソナを作成
+```
+
+### Phase 2: プロンプト生成 (20-30分)  
+```bash
+# templates/prompts/research_prompts.md を使用
+# ペルソナを基にGemini MCP最適化されたDeepResearchプロンプトを生成
+```
+
+### Phase 3: DeepResearch実行 (5分)
+```bash
+# Perplexity.ai使用（推奨）
+# リアルタイムWeb検索による最新情報取得
+# templates/prompts/perplexity_research.md のプロンプト使用
+```
+
+### Phase 4: 記事生成 (45-60分)
+```bash
+# templates/article/ranking_article.md テンプレート使用
+# リサーチデータを参照してClaude Codeで高品質記事生成
+```
+
+### Phase 5: 品質チェック & アフィリエイトリンク統合 (30-45分)
+```bash
+# 品質チェックリストによる最終確認
+uv run python3 tools/affiliate_link_generator_integrated.py --project-id "your-project-id"
+```
+
+## 📋 使用方法
 
 ### 基本ワークフロー
 詳細な使用方法は `docs/complete_workflow.md` を参照してください。
 
-### PA-APIサクラ検出システム
+### 🛠️ コアツール群
 
-#### 1. 環境設定
+#### 1. アフィリエイトリンク統合生成ツール
 ```bash
-# 環境変数設定（推奨）
+# 基本実行（プロジェクトID指定）
+uv run python3 tools/affiliate_link_generator_integrated.py --project-id "gaming-monitor-fighter-2025-01-07"
+
+# 特定記事のリンク生成
+uv run python3 tools/affiliate_link_generator_integrated.py --article-path "projects/project-id/articles/draft.md"
+
+# ドライラン（変更前に確認）
+uv run python3 tools/affiliate_link_generator_integrated.py --project-id "your-project-id" --dry-run
+```
+
+#### 2. PA-APIクライアント & サクラ検出システム
+```bash
+# PA-APIクライアントのテスト
+uv run pytest tests/test_pa_api_client.py -v
+
+# サクラ検出機能の実行
+python3 tools/sakura_detector.py --asin "B08FJ7XQ5N" --threshold 0.3
+```
+
+#### 3. ブラウザ自動化（Playwright）
+```bash
+# サクラチェッカー自動実行
+python3 tools/playwright_automation.py --url "https://sakura-checker.jp/search/B08FJ7XQ5N"
+```
+
+### 🔧 環境設定
+
+#### セキュリティ重要: 環境変数での認証情報管理
+```bash
+# 推奨方法: 環境変数設定
 export AWS_ACCESS_KEY_ID="your-pa-api-access-key"
 export AWS_SECRET_ACCESS_KEY="your-pa-api-secret-key"
 
-# または config/settings.yaml で設定
+# .bashrc または .zshrc に追記して永続化
+echo 'export AWS_ACCESS_KEY_ID="your-key"' >> ~/.bashrc
+echo 'export AWS_SECRET_ACCESS_KEY="your-secret"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-#### 2. システム実行
+#### ⚠️ セキュリティ改善が必要
+現在の `config/settings.yaml` にはハードコードされた認証情報が含まれています。本格運用前に以下の対応が必要です：
+
 ```bash
-# 基本使用例
-python tools/affiliate_link_generator_integrated.py --project-id "gaming-monitor-2025"
+# 1. 機密情報の環境変数移行
+mv config/settings.yaml config/settings.yaml.backup
 
-# テスト実行
-uv run pytest tests/ -v
+# 2. 設定テンプレートの作成
+cp config/settings.yaml config/settings.yaml.example
+# settings.yaml.example から機密情報を削除
 
-# 品質チェック
-python scripts/pa_api_quality_check.py --all
+# 3. .gitignore の確認
+echo "config/settings.yaml" >> .gitignore
+echo "config/settings.local.yaml" >> .gitignore
 ```
 
-#### 3. パフォーマンス要件
+### 📊 パフォーマンス指標
+
 - **処理能力**: 15商品を20分以内で処理
-- **品質基準**: レビュー数500件以上、評価4.0以上
+- **品質基準**: レビュー数500件以上、評価4.0以上  
 - **サクラ検出**: 30%閾値でのサクラ度判定
+- **記事品質**: 80点以上の品質スコア目標
+- **収益目標**: 月50,000円のアフィリエイト収益
 
-## 特徴
+## ✨ 特徴
 
-### 記事作成システム
-- **Claude Code中心**: 全工程でClaude Codeが核となる処理
-- **テンプレートベース**: 標準化されたテンプレートで一貫した品質
-- **対話型ワークフロー**: Claude Codeとの対話で効率的な作業
-- **品質保証**: 各フェーズでの品質チェックとエラー復旧
-- **柔軟性**: Gemini MCP利用可/不可両対応
+### 🎯 記事作成システム
+- **Claude Code中心**: 全工程でClaude Codeが核となる効率的処理
+- **テンプレートベース**: 標準化されたテンプレートで一貫した高品質記事
+- **対話型ワークフロー**: Claude Codeとの対話による効率的作業フロー
+- **品質保証**: 各フェーズでの厳格な品質チェックとエラー復旧機能
+- **柔軟性**: Gemini MCP利用可/不可両対応の柔軟な運用体制
 
-### PA-APIサクラ検出システム
-- **TDD実装**: Red-Green-Refactorサイクルによる高品質実装
-- **統合API**: Amazon PA-API 5.0による公式商品データ取得
-- **AI検出**: 機械学習ベースのサクラレビュー検出アルゴリズム
-- **自動化**: Playwright使用のブラウザ自動化によるサクラチェッカー連携
-- **CI/CD**: GitHub Actionsによる継続的品質管理
+### 🔍 PA-APIサクラ検出システム
+- **TDD実装**: Red-Green-Refactorサイクルによる高信頼性システム
+- **統合API**: Amazon PA-API 5.0による公式データ取得と処理
+- **統計分析**: 統計的異常値検出によるサクラレビューの識別
+- **自動化**: Playwright使用の完全自動ブラウザ操作
+- **CI/CD対応**: GitHub Actionsによる継続的品質管理と自動テスト
 - **セキュリティ**: 環境変数管理による認証情報の安全な取り扱い
 
-## ライセンス
+### 🛠️ 技術スタック
+
+**コア技術**:
+- Python 3.12+ (uv パッケージ管理)
+- Amazon PA-API 5.0 (boto3)
+- Playwright (ブラウザ自動化)
+- pytest (TDD実装)
+
+**依存関係**:
+```toml
+dependencies = [
+    "boto3>=1.40.25",           # AWS SDK, PA-API
+    "numpy>=2.3.2",             # 数値計算
+    "pandas>=2.3.2",            # データ処理 
+    "playwright>=1.55.0",       # ブラウザ自動化
+    "python-amazon-paapi>=5.0.1", # PA-API専用クライアント
+    "pyyaml>=6.0.2",           # 設定ファイル管理
+    "scipy>=1.16.1",           # 統計分析（サクラ検出）
+]
+```
+
+## 📚 関連ドキュメント
+
+- [`docs/complete_workflow.md`](docs/complete_workflow.md) - 完全ワークフローガイド
+- [`docs/PA-API.md`](docs/PA-API.md) - PA-API仕様とトラブルシューティング  
+- [`docs/tdd_implementation_pa_api.md`](docs/tdd_implementation_pa_api.md) - TDD実装ガイド
+- [`tools/README.md`](tools/README.md) - ツール詳細仕様
+
+## 🚨 重要な注意事項
+
+### セキュリティ
+現在の `config/settings.yaml` には認証情報がハードコードされています。**本格運用前に環境変数管理への移行が必須**です。
+
+### 記事作成時の正確性原則
+- **調査レポート記載情報のみ使用** - 調査レポート外の情報は絶対に含めない
+- **すべての情報に根拠が必要** - 推測や憶測は一切禁止
+- **不確実な情報の排除** - 確認できない情報は含めない
+
+## 📄 ライセンス
 
 Private Use Only

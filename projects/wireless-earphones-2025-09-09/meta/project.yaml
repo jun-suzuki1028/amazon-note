@@ -1,0 +1,8 @@
+project_id: wireless-earphones-2025-09-09
+created_at: $(date -Iseconds)
+status: initialized
+category: ワイヤレスイヤホン
+target_audience: 25-35歳のリモートワーカー・通勤者
+budget_range: 5000-20000円
+article_type: ランキング記事
+workflow: Perplexity統合ワークフロー
