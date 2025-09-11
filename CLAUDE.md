@@ -91,6 +91,39 @@ All content generation uses structured templates that ensure consistency and qua
 - Article templates with SEO optimization
 - Analytics templates for performance tracking
 
+#### Article Template System
+The system provides multiple article templates optimized for different audiences and content styles:
+
+**Available Templates**:
+- **`ranking_article.md`** (Note特化型)
+  - **特徴**: ファン化重視、体験談中心、ストーリーテリング
+  - **適用**: 読者との信頼関係構築、共感型コンテンツ
+  - **記事長**: 3000+ words、詳細な体験談とエピソード
+  
+- **`ai_analysis_ranking.md`** (AI分析型)
+  - **特徴**: データ重視、簡潔な情報提供、客観的分析
+  - **適用**: 情報重視の読者、効率的な商品比較
+  - **記事長**: 2000-3000 words、コンパクトで濃密な情報
+
+**Template Selection Guidelines**:
+```yaml
+# 自動選択基準（config/settings.yaml参照）
+audience_type:
+  - note_fans → ranking_article
+  - data_oriented → ai_analysis_ranking
+  - general → ranking_article
+
+content_style:
+  - experience_based → ranking_article
+  - analytical → ai_analysis_ranking
+  - storytelling → ranking_article
+
+article_length:
+  - long_form → ranking_article (3000+ words)
+  - medium_form → ai_analysis_ranking (2000-3000 words)
+  - short_form → ai_analysis_ranking (~2000 words)
+```
+
 ### Error Handling Strategy
 The system implements comprehensive error handling for:
 - PA-API authentication and rate limiting (`PAAPIAuthenticationError`, `PAAPIRateLimitError`)
@@ -106,8 +139,24 @@ Tests are structured following TDD principles with Red-Green-Refactor cycles. Te
 1. **Persona Creation** (30-45min): Generate detailed reader profiles using `templates/persona/default_persona.md`
 2. **Prompt Generation** (20-30min): Create DeepResearch prompts using `templates/prompts/research_prompts.md`
 3. **DeepResearch Execution** (60-90min): Execute research via Gemini MCP or manual process
-4. **Article Generation** (45-60min): Generate articles using `templates/article/ranking_article.md`
-5. **Quality Check & Finalization** (30-45min): Quality assurance using checklists in `checklists/`
+4. **Article Generation** (45-60min): Generate articles using selected template:
+   - `templates/article/ranking_article.md` for Note特化型
+   - `templates/article/ai_analysis_ranking.md` for AI分析型
+5. **Quality Check & Finalization** (30-45min): Template-specific quality assurance using checklists in `checklists/`
+
+#### Template Selection in Workflow
+**Phase 4でのテンプレート選択**:
+```bash
+# Note特化型（体験談重視）
+article_template: "ranking_article"
+target_words: 3000-5000
+focus: "読者との共感、ストーリーテリング"
+
+# AI分析型（データ重視）  
+article_template: "ai_analysis_ranking"
+target_words: 2000-3000
+focus: "客観的分析、効率的情報提供"
+```
 
 ### Gemini MCP Integration
 The system is designed to work with Gemini MCP for research automation but includes manual fallbacks. Research prompts are specifically optimized for Gemini MCP execution.
