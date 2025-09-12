@@ -1,0 +1,11 @@
+
+- Sony WF-1000XM5
+    - https://amzn.to/41MfE86
+- AirPods Pro（第2世代）
+    - https://amzn.to/4ghRVCt
+- Jabra Elite 10
+    - https://amzn.to/4nojNHp
+- Anker Soundcore Liberty 4 NC
+    - https://amzn.to/41ONyZO
+- Technics EAH-AZ80
+    - https://amzn.to/3I8sQxm
